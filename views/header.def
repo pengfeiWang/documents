@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html data-user="{%if(user){%}{%= user._id.toString() %}{%}%}">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"  name="viewport" >
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<title>{%=title%}</title>
+<meta name="Description" content="">
+<meta name="Keywords" content="">
+<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/base.css">
+</head>
+
+<body style="padding-top:29px; padding-bottom: 0">
+	<div class="top-tol">
+		<a href="/" class="btn btn-xs btn-default">首页 </a>
+
+		{% if(user) { %}
+		<button class="btn btn-xs btn-default" id="edit-ok" hidden>确认</button>
+		<button class="btn btn-xs btn-default" id="edit-doc">修改文档</button>
+		<button class="btn btn-xs btn-default" id="create-doc">创建文档</button>
+		<button class="btn btn-xs btn-default" id="edit-cancel" hidden>返回</button>
+		{% } %}
+		<!--button class="btn btn-xs btn-default" id="edit-ok" hidden>确认</button-->
+
+		{%if(user && docId){%}
+			<!--button class="btn btn-xs btn-default" id="edit-doc">修改文档</button-->
+		
+		{%}%}
+
+
+		<!--button class="btn btn-xs btn-default" id="edit-doc" {%if(!user){%}hidden{%}else{%}{%if(!docId){%}hidden{%}%}{%}%}>修改文档</button-->
+		{%if(user){%}
+			<!--button class="btn btn-xs btn-default" id="create-doc">创建文档</button-->
+		{%}%}
+		
+
+		<!--button class="btn btn-xs btn-default" id="create-doc" {%if(!user){%}hidden{%}else{%}{%if(docId){%}hidden{%}%}{%}%}>创建文档</button-->
+		<!--button class="btn btn-xs btn-default" id="edit-cancel" hidden>返回</button-->
+
+	</div>
+	<div class="user" id="tool-nav-user" style="display:flex; flex:1; justify-content: flex-end;">
+		<div class="login-btn-style" >
+			<select class="select-dep">
+				<option value="">选择部门</option>
+				{% department.forEach(function (v){ %}
+					{% if( docId && depId ) { %}
+						<option value="{%= v._id %}" {% if (v._id==depId) { %} selected {% } %}>{%= v.name %}</option>
+					{% } else { %}
+						<option value="{%= v._id %}">{%= v.name %}</option>
+					{% } %}
+				{% }) %}
+			</select>
+			<select class="select-pro">
+				<option value="" selected>选择文档</option>
+				{% if( docId && proData ) { %}
+					{% proData.forEach(function (v) { %}
+						<option value="{%= v._id %}" {% if(v.__id==docId) { %} selected {% } %}>{%= v.name %}</option>
+				    {%  }) %}
+				{% } %}
+			</select>
+			<button class="btn btn-xs btn-default" {% if (!user) { %} hidden {% } %}>我</button>
+			<button class="btn btn-xs btn-default btn-logout" {% if (!user) { %} hidden {% } %}>退出</button>
+		</div>
+		<div class="permission-out" {%if(user){%}hidden{%}%}>
+			<button class="btn btn-xs btn-default login">登陆</button>
+			<button class="btn btn-xs btn-default register">注册</button>
+		</div>
+	</div>
+		

@@ -1,0 +1,14 @@
+<div class="mask" id="mask"></div>
+<div class="msgbox" id="msgbox">
+	<div class="msgbox-container">
+		<div class="msgbox-content">
+			<button type="button" class="btn btn-info">阿达说的</button>
+		</div>		
+	</div>
+</div>
+<script src="/js/shouxinMFW.min.js"></script>
+<script src="/js/user.js"></script>
+<script src="/js/nav.js"></script>
+{% if(pageName){%}<script src="/js/{%= pageName %}.js"></script>{%}%}
+</body>
+</html>

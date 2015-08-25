@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"  name="viewport" >
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<title>markdown Editor</title>
+<meta name="Description" content="">
+<meta name="Keywords" content="">
+<link rel="stylesheet" href="/css/main.css?v=22">
+<link rel="stylesheet" href="/css/inner.css">
+<link rel="stylesheet" href="/css/github.css">
+
+</head>
+<body style="padding: 0">
+<div id="container">
+<div id="preview">
+{% if ( data.content ) { %}
+{%- data.content %}
+{% } %}
+</div>
+</div>
+<!-- <script src="/js/emment.js"></script> -->
+<script src="/js/shouxinMFW.min.js"></script>
+<script src="/js/marked.js"></script>
+<script src="/js/highlight.js"></script>
+<script src="/js/side.js"></script>
+<!-- <script src="/js/src/ace.js"></script> -->
+<!-- <script src="/js/src/ext-emmet.js"></script> -->
+<script src="/js/hlig.js"></script>
+<script src="/js/side.js"></script>
+<script src="/js/demo-click.js"></script>
+<script src="/js/inner.js"></script>
+
+</body>
+</html>

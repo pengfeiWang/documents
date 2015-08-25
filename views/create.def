@@ -1,0 +1,5 @@
+{%#def.include('./header')%}
+	<div class="">
+		{%#def.include('./createinner')%}
+	</div>
+{%#def.include('./footer')%}		

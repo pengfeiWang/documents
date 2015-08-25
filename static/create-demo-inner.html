@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"  name="viewport" >
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<title>Untitled Document</title>
+<meta name="Description" content="">
+<meta name="Keywords" content="">
+<link rel="stylesheet" href="/css/main.css">
+<style>
+	body{overflow: hidden}
+	#appWrap{
+		
+	}
+</style>
+</head>
+<body style="padding: 0">
+	<div id="appWrap"></div>
+</body>
+<script>
+	window.onload = function () {
+		document.body.style.height = window.parent.document.body.offsetHeight +'px';
+		window.addEventListener('resize', function () {
+			document.body.style.height = window.parent.document.body.offsetHeight +'px';
+		});
+	}
+</script>
+</html>

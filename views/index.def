@@ -1,0 +1,57 @@
+{% if(!browser) { %}
+<style type="text/css">
+	.err-browser{
+		width:100%; height:100%; font-size:50px;
+		line-height: 100px;text-align: center;
+		
+		text-shadow: 1px 1px #ccc,
+
+		1px 1px #ccc,
+		2px 2px #ccc,
+		3px 3px #ccc,
+		4px 4px #ccc,
+		5px 5px #ccc,
+		6px 6px #ccc,
+		7px 7px #ccc,
+		8px 8px #ccc,
+		9px 9px #ccc,
+		10px 10px #ccc,
+		11px 11px #ccc,
+		12px 12px #ccc,
+		13px 13px #ccc,
+		14px 14px #ccc,
+		15px 15px #ccc,
+		16px 16px #ccc,
+		17px 17px #ccc,
+		18px 18px #ccc,
+		19px 19px #ccc,
+		20px 20px #ccc,
+		21px 21px #ccc,
+		22px 22px #ccc,
+		23px 23px #ccc,
+		24px 24px #ccc,
+		25px 25px #ccc,
+		26px 26px #ccc,
+		27px 27px #ccc,
+		28px 28px #ccc,
+		29px 29px #ccc,
+		30px 30px #ccc,
+		31px 31px #ccc,
+		32px 32px #ccc
+	}
+	.err-browser img{ border-radius: 50%}
+</style>
+<div class="err-browser" style="width:100%; height:100%; font-size:50px;">
+	<p>差不多就可以了, 换个浏览器吧大哥</p>
+	<p>还什么还要别人教么?</p>
+	<p><img src="/images/bishi.jpg"></p>
+</div>
+{% } else { %}
+{% include header.def %}
+	<div class="body-inner">
+		{% include preview.def %}
+		{% include side-right.def %}
+	</div>
+{% include footer.def %}
+{% } %}
+

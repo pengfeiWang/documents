@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"  name="viewport" >
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<title>markdown Editor</title>
+<meta name="Description" content="">
+<meta name="Keywords" content="">
+<link rel="stylesheet" href="/css/msgbox.css">
+<link rel="stylesheet" href="/css/inner.css">
+<link rel="stylesheet" href="/css/github.css">
+
+</head>
+<body style="padding-top:20px;">
+<div id="container">
+<div id="editorHead" style="position:fixed; top:0; left:0; right:10px;  height:20px; z-index: 99; background:#ccc">
+	<button onclick="alert('暂未开放');" id="up-img">上传图片</button>
+	<button  id="create-demo">创建demo</button>
+</div>
+<pre id="inp"></pre>
+<div id="preview"></div>
+</div>
+<script src="/js/shouxinMFW.min.js"></script>
+<script src="/js/marked.js"></script>
+<script src="/js/highlight.js"></script>
+<script src="/js/side.js"></script>
+<script src="/js/src/ace.js"></script>
+<script src="/js/hlig.js"></script>
+<script src="/js/createdemo.js"></script>
+<script src="/js/demo-click.js"></script>
+<script src="/js/edit.js"></script>
+<script>
+if(window.editJs) window.editJs();
+</script>
+</body>
+</html>

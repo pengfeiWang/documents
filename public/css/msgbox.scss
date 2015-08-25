@@ -1,0 +1,9 @@
+@charset "UTF-8";
+@import '../../../gruntSassMobile/helpers/_btn.scss';
+@import '../../../gruntSassMobile/animate/_animate.scss';
+@import '../../../gruntSassMobile/helpers/_mask.scss';
+@import '../../../gruntSassMobile/helpers/_msgbox.scss';
+
+.msgbox .msgbox-content,
+.msgbox .msgbox-body-inner,
+.msgbox .msgbox-msg{height:100%; max-height:100%}

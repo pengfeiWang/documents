@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"  name="viewport" >
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<title>markdown Editor</title>
+<meta name="Description" content="">
+<meta name="Keywords" content="">
+<link rel="stylesheet" href="/css/msgbox.css">
+<link rel="stylesheet" href="/css/inner.css">
+<link rel="stylesheet" href="/css/github.css">
+<style>
+  .ace_entity.ace_name.ace_function{
+    color: #900;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body style="position:relative; padding:20px 0 0; font-size:1.2em">
+<div id="editorHead" style="position:fixed; top:0; left:0; right:10px;  height:20px; z-index: 99; background:#ccc">
+  <button onclick="alert('暂未开放');" id="up-img">上传图片</button>
+  <button  id="create-demo">创建demo</button>
+</div>
+
+<div id="container">
+<pre id="inp">markdown 语法, html css js 可以高亮, `修改左侧代码瞧瞧`
+
+> &lt;p style="color:blue"&gt;
+__文档中 二号标题会作为分类使用,随后的三号标题会作为子类,
+在有二号标题的情况下, 
+右侧栏会出现分类导航 
+利用锚点, 可以快速切换到所选位置, 如果文档比较长的话__&lt;/p&gt;
+
+
+#1号标题
+```css
+/*代码块*/
+a{
+   color:#ccc;
+}
+```
+
+asdasd `asd` asdasd
+
+```js
+function test() {
+    var i = 0;
+}
+```
+
+```demo:标题
+&lt;div style="color:red"&gt;红色&lt;div&gt;
+```
+asdad测试
+
+## btn 按钮类
+### 示例1
+```html
+  &lt;button class="btn"&gt;
+    html
+  &lt;/button&gt;
+```
+### 示例2
+```html
+  &lt;button class="btn"&gt;
+    html
+  &lt;/button&gt;
+```
+## 2号标题 markdown 中文文档
+
+[标准markdown文档](http://wowubuntu.com/markdown/)
+</pre>
+<div id="preview"></div>
+</div>
+<script src="/js/shouxinMFW.min.js"></script>
+<script src="/js/marked.js"></script>
+<script src="/js/highlight.js"></script>
+<script src="/js/side.js"></script>
+<script src="/js/src/ace.js"></script>
+<script src="/js/hlig.js"></script>
+<script src="/js/createdemo.js"></script>
+<script src="/js/demo-click.js"></script>
+<script src="/js/edit.js"></script>
+<script>
+if(window.editJs) window.editJs();
+</script>
+</body>
+</html>

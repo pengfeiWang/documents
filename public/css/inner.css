@@ -1,0 +1,153 @@
+  *,
+  *:before,
+  *:after {
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+    -moz-tap-highlight-color: transparent;
+    -ms-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -moz-touch-callout: none;
+    -ms-touch-callout: none;
+    /* user-select:none; */
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  html, body{
+    height:100%;
+    overflow: auto;
+    overflow-x: hidden;
+    line-height: 1.428571429;
+  }
+  html {
+    font-family:"Tahoma","Arial","Roboto","Droid Sans","Helvetica Neue","Droid Sans Fallback","Heiti SC","Hiragino Sans GB","Simsun","sans-self";
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%; 
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    font-size: 62.5%; 
+  } 
+  ul, li, ol{
+  list-style:initial;
+}
+  body{
+    color:#333;
+    /*font-size: 1.2rem;*/
+   /* padding-top: 40px;*/
+  }
+  a{
+    font-size: 1.2rem;
+  }
+  .select-box{
+    position: fixed; 
+    top:0;
+    height:40px;
+    width: 100%;
+    padding:10px 0;
+    background: #ddd;
+  }
+  #container{
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      width: 100%;
+      height: 100%;
+  }
+  #inp{
+    flex:5;
+    padding: 5px;
+    border:none;
+    background: #f8f8f8;
+    width: 100%;
+    height: 100%;
+    margin:0;
+  }
+  #inp:focus{
+    outline: none;
+  }
+  #preview{
+    /*height:100%;*/
+    -webkit-flex:5;
+    flex:5;
+    padding:0 10px;
+    /*overflow-x: hidden; 
+    overflow-y: scroll;*/
+    /*position: relative;*/
+  
+  }
+  #cont{
+    flex:2;
+  }
+  .left-box{
+    width: 100%;
+    height: 100%;
+    flex:5;
+    position: relative;
+  }
+
+code {
+  padding: 2px 4px;
+  font-size: 1.2rem;
+  color: #c7254e;
+  /*background-color: #f9f2f4;*/
+  /*border-radius: 4px;*/
+  white-space: nowrap;
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+pre code {
+  white-space: pre;
+}
+pre, p, ul, ol, h1,h2,h3,h4,h5,h6{
+  margin: 0.3em 0;
+}
+
+blockquote {
+  padding:5px;
+  background: rgba(170,170,170, .1);
+  border: 1px solid #ddd;
+  border-radius:5px;
+}
+
+pre code .hljs-attribute{
+  color:#333;
+}
+
+ul, ol{
+  padding-left: 20px;
+}
+blockquote, hr, p, pre{
+  margin-bottom: 15px;
+}
+pre,p{
+  font-size: 1.2rem
+}
+blockquote p{
+  font-size: 1.2rem
+}
+
+blockquote p:last-child{
+  margin-bottom: 0.3em;
+}
+code{
+  overflow: scroll;
+}
+h2{
+  font-size: 1.8rem;
+}
+h3{
+  font-size: 1.4rem;
+}
+#preview ul li,
+#preview ol li {
+  line-height: 20px;
+}
+input, button, select, textarea, pre, code, pre *, code *, .select-on {
+/*-webkit-user-select: inherit;
+-moz-user-select: inherit;
+-ms-user-select: inherit;
+user-select: inherit;*/
+}

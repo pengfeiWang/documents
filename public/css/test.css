@@ -1,0 +1,24 @@
+/* line 4, ../../../gruntSassMobile/test.scss */
+.test {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  box-orient: vertical;
+}
+
+/* line 9, ../../../gruntSassMobile/test.scss */
+.test > * {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+/* line 10, ../../../gruntSassMobile/test.scss */
+.b {
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}

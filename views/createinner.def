@@ -1,0 +1,29 @@
+<form action="/create" method="post" id="create-project">
+	<ul class="list-group create-list">
+		<li>
+			<div class="inner">
+				<div class="left">部门: </div>
+				<div class="list-con">
+					<select name="department" id="" required>
+						<option value="">选择部门</option>
+						{%~it.department:c:i%}
+						<option value="{%=c.catname%}">{%=c.name%}</option>
+						{%~%}
+					</select>
+				</div>
+			</div>
+		</li>
+		<li>
+			<div class="inner">
+				<div class="left">文档名称: </div>
+				<div class="list-con">
+					<input type="text" name="doc" id="" required>
+				</div>
+			</div>
+		</li>
+	</ul>
+
+	<div class="bottom-tool" style="display:flex; justify-content: center;">
+		<button type="submit" class="btn btn-info">确认</button>
+	</div>
+</form>
