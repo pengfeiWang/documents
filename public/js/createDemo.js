@@ -1,1 +1,45 @@
-function createDemoHandle(b){var a='<iframe src="/static/create-demo.html" frameborder="0" width="100%" height="100%"></iframe>';window.parent.$.ui.msgbox({title:"创建DEMO",type:"confirm",customClass:{userClass:"create-demo-msg"},callBack:{preInput:function(){var h=this.content;var i=h.querySelectorAll("iframe")[0];var d=this.msgBox;var g=document.getElementById("create-demo-inner");var f=i.contentDocument.getElementById("inp");var e=d.getBoundingClientRect();var c=d.offsetHeight;i.height=c+"px";$.on(i,"load",function(){i.height=d.offsetHeight+"px";g=i.contentDocument.getElementById("create-demo-inner");f=i.contentDocument.getElementById("inp");g.height=f.offsetHeight+"px"});$.on(window,"resize",function(){i.height=d.offsetHeight+"px";g.height=f.offsetHeight+"px"})},okFn:function(){var g=this.content;var j=g.querySelectorAll("iframe")[0];var e=0;var i=window.editor;var f=j.contentWindow.editor;var d=f.getValue();var c="```demo\n";var h="\n```\n";i.insert(c+d+h)}},msg:a})};
+function createDemoHandle ( str ) {
+	var msg = '<iframe src="/static/create-demo.html" frameborder="0" width="100%" height="100%"></iframe>'
+	window.parent.$.msgbox({
+		title: '创建DEMO',
+		type: 'confirm',
+		customClass:{
+			userClass : 'create-demo-msg'
+		},
+		callBack: {
+			preInput: function () {
+				var content = this.content;
+				var ifr = content.querySelectorAll('iframe')[0];
+				var msgBox = this.msgBox;
+
+				var msgH = msgBox.getBoundingClientRect();
+				var msgH2 = msgBox.offsetHeight;
+				
+				ifr.height = msgH2 + 'px';
+
+				$.on(window, 'resize', function () {
+					ifr.height = msgBox.offsetHeight + 'px';
+					// var ifrSub =  ifr.contentDocument;
+					// console.log(ifr)
+
+				});
+			},
+			okFn: function () {
+				var content = this.content;
+				var ifr = content.querySelectorAll('iframe')[0];
+				var a = 0;
+
+				var parentEditor = window.editor;
+				var thisEditor = ifr.contentWindow.editor;
+				var thisEditorVal = thisEditor.getValue();
+
+				var strStart = '```demo\n';
+				var strEnd = '\n```\n';
+
+				parentEditor.insert( strStart + thisEditorVal + strEnd )
+
+			}
+		},
+		msg: msg
+	})
+}

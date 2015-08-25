@@ -1,1 +1,135 @@
-(function(){function a(n,c){var l=document.getElementById("inp");var e=ace.edit("inp");var g=document.getElementById("preview");var o=document.getElementById("up-img");var r=document.getElementById("create-demo");var b="ace/mode/"+(c?c:"markdown");e.getSession().setMode(b);if(c){e.setTheme("ace/theme/monokai")}else{e.setTheme("ace/theme/dreamweaver")}e.setAutoScrollEditorIntoView(true);e.renderer.setShowGutter(!0);if(c=="html"){e.setOption("enableEmmet",true)}e.setOption("maxLines",6000);e.setOption("minLines",50);e.getSession().setUseWrapMode(!0);e.setShowPrintMargin(!1);if(n=="edit"){var i=document.getElementById("tmp-source");e.getSession().setValue(i.value)}window.editor=e;e.resize(true);var h=new marked.Renderer();h.heading=function(s,t){var m=s.toLowerCase().replace(/[^\w]+/g,"-");return"<h"+t+' id="'+s.replace(/\s+/g,"-")+'">'+s+"</h"+t+">"};h.link=function(m,w,v){if(this.options.sanitize){try{var t=decodeURIComponent(unescape(m)).replace(/[^\w:]/g,"").toLowerCase()}catch(u){return""}if(t.indexOf("javascript:")===0){return""}}var s='<a href="'+m+'"';if(w){s+=' title="'+w+'"'}s+=' target="_blank">'+v+"</a>";return s};h.code=function(s,v,t){s=s.replace(/\</g,"&lt;").replace(/\>/g,"&gt;");if(!v){return"<pre><code>"+s+"\n</code></pre>"}if(/demo/i.test(v)){var u="查看DEMO请点击";var m=[];if(/\:/.test(v)){m=v.split(":");u=m[1]}return'<a href="javascript:;" data-code="'+escape(s,true)+'">'+u+"\n</a>\n"}else{return'<pre><code class="'+this.options.langPrefix+escape(v,true)+'">'+s+"\n</code></pre>\n"}};var q=false;var k;if(c){var j=document.getElementById("preview");var p=j.getElementsByTagName("iframe")[0];var f=p.offsetHeight;var d=e.container.offsetHeight;if(d>f){p.style.height=d+"px"}p.onload=function(){f=p.offsetHeight;if(d>f){p.style.height=d+"px"}e.on("change",function(s){f=p.offsetHeight;if(d>f){p.style.height=d+"px"}var m=e.getSession().getValue();p.contentDocument.getElementById("appWrap").innerHTML=m})}}else{e.on("change",function(t){var m=marked(e.getSession().getValue(),{renderer:h});g.innerHTML=m;var s=g.getElementsByTagName("pre");window.sideHand();if(s&&hlig){hlig(s)}})}e._signal("change");window.sideHand();if(r&&createDemoHandle){$.on(r,"click",function(m){m.preventDefault();createDemoHandle()})}}window.editJs=a})();
+(function (){
+	function editJs ( edit, mode ){
+		var editor = ace.edit("inp");
+		var preview = document.getElementById('preview');
+		
+		var btnUpImg = document.getElementById('up-img');
+		var btnCreateDemo = document.getElementById('create-demo');
+
+
+		var m = "ace/mode/" + (mode ? mode : 'markdown');
+	
+		editor.getSession().setMode( m );
+		if( mode ) {
+			editor.setTheme("ace/theme/monokai");
+		} else {
+			editor.setTheme("ace/theme/dreamweaver");
+		}
+		
+
+		editor.setAutoScrollEditorIntoView(true);
+		// editor.renderer.setFadeFoldWidgets(true);
+		editor.renderer.setShowGutter(!0);
+		// editor.getSession().setUseWrapMode(true);
+		// editor.setShowFoldWidgets(!0)
+		if( mode == 'html' ) {
+			editor.setOption("enableEmmet", true);
+		}
+		// 
+		editor.setOption("maxLines", 6000);
+		editor.setOption("minLines", 50);
+
+
+		editor.getSession().setUseWrapMode(!0);
+		editor.setShowPrintMargin(!1);
+		if( edit == 'edit' ) {
+			var tmpSource = document.getElementById('tmp-source');
+			editor.getSession().setValue( tmpSource.value );
+		}
+
+
+		window.editor = editor;
+		editor.resize(true);
+
+		var renderer = new marked.Renderer();
+		renderer.heading = function (text, level) {
+		  var escapedText = text.toLowerCase().replace(/[^\w]+/g, '-');
+		  return '<h' + level + ' id="'+text.replace(/\s+/g,'-')+'">'+ text + '</h' + level + '>';
+		}
+
+		renderer.link = function(href, title, text) {
+			if (this.options.sanitize) {
+				try {
+					var prot = decodeURIComponent(unescape(href))
+						.replace(/[^\w:]/g, '')
+						.toLowerCase();
+				} catch (e) {
+					return '';
+				}
+				if (prot.indexOf('javascript:') === 0) {
+					return '';
+				}
+			}
+			var out = '<a href="' + href + '"';
+			if (title) {
+				out += ' title="' + title + '"';
+			}
+			out += ' target="_blank">' + text + '</a>';
+			return out;
+		};
+
+		renderer.code = function(code, lang, escaped) {
+			
+			code = code.replace(/\</g, '&lt;').replace(/\>/g,'&gt;');
+			if (!lang) {
+				return '<pre><code>'
+				+ code
+				+ '\n</code></pre>';
+			}
+			
+			if( /demo/i.test(lang) ) {
+				var title = '查看DEMO请点击';
+				var arr = [];
+				if(/\:/.test(lang)) {
+					arr = lang.split(':');
+					title = arr[1];
+				}
+				return '<a href="javascript:;" data-code="'
+					+ escape(code, true)
+					+ '">'
+					+ title
+					+ '\n</a>\n';
+			} else {
+				return '<pre><code class="'
+					+ this.options.langPrefix
+					+ escape(lang, true)
+					+ '">'
+					+ code
+					+ '\n</code></pre>\n';
+			}
+
+		};
+		var bol = false;
+		var appWrap;
+		if(mode) {			
+				var preV =  document.getElementById('preview');
+				var subIfr = preV.getElementsByTagName('iframe')[0];
+				subIfr.onload = function () {
+					editor.on("change", function( e ){
+						var html = editor.getSession().getValue();
+						subIfr.contentDocument.getElementById('appWrap').innerHTML = html;
+					});
+				}
+		} else {
+			editor.on("change", function( e ){
+				var html = marked( editor.getSession().getValue(), { renderer: renderer });
+				preview.innerHTML = html;
+				var pre = preview.getElementsByTagName('pre');
+				window.sideHand();
+				if( pre && hlig )  {
+					hlig( pre );
+				}
+			});
+		}
+		editor._signal('change');
+		window.sideHand();
+		if ( btnCreateDemo && createDemoHandle ) {
+			$.on(btnCreateDemo, 'click', function (e) {
+				e.preventDefault();
+				createDemoHandle()
+			});
+		}
+	};
+	window.editJs = editJs;
+})();
+

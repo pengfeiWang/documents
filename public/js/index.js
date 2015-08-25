@@ -1,1 +1,460 @@
-document.addEventListener("DOMContentLoaded",function(){var s=document,c=s.querySelectorAll(".tool")[0],i=s.getElementById("tool-side"),q=s.getElementById("tool-nav-user"),h=s.getElementById("tool-nav"),b=q.querySelectorAll(".select-dep")[0],d=q.querySelectorAll(".select-pro")[0],n=s.getElementById("add-category"),k=s.getElementById("edit-ok"),p=s.getElementById("create-doc"),a=s.getElementById("edit-doc"),m=s.getElementById("edit-cancel"),j=!!s.documentElement.getAttribute("data-user");function g(t){if(t.keyCode===8){t.preventDefault();return}}if(window.location.pathname=="/"){a&&a.setAttribute("hidden",true);d.disabled=true;b.options[0].selected=d.options[0].selected=true}function r(u){var t=$("#ifr")[0];return u?t.contentWindow.editor:t}function f(){return s.documentElement.getAttribute("data-user")}function l(u,t){$.ui.mask.show({tipText:u,autoHide:2000,showCallBack:function(){if(t){window.location.href=t;return}window.location.reload()}})}function e(){}function o(){}$.on(b,"change",function(y){var w=this;var u=w.value;var A=r();var x=r("inp");d.options[0].selected=true;var z=['<option value="">选择文档</option>',"{%~it:c:i%}",'<option value="{%=c._id%}" {%?c.selected%}selected{%?%}>{%=c.name%}</option>',"{%~%}"].join("");if(u){d.removeAttribute("disabled");$.ajax({url:"/project",type:"post",data:{departmentId:u},success:function(B){var t=0;var D=B.result;var v=['<div>输入文档名称: <input type="text" name="pro"></div>'].join("");if(!B.status){$.ui.msgbox({msg:"暂无文档, 是否立即创建",type:"confirm",callBack:{okFn:function(){if(B.userName){$.ui.msgbox({title:"创建文档",msg:v,type:"confirm",callBack:{preInput:function(){var E=this.okBtn,G=this.content;E.disabled=true;E.classList.add("disabled");var F=G.querySelectorAll("input")[0];this.inp=F;$.on(F,"input",function(){if(this.value){E.removeAttribute("disabled");E.classList.remove("disabled")}else{E.disabled=true;E.classList.add("disabled")}})},okFn:function(){var E=this.inp.value;var G=r();var F='<option>选择文档</option><option value="'+E+'" selected>'+E+"</option>";d.innerHTML=F;w.disabled=d.disabled=true;p.setAttribute("hidden",true);a.setAttribute("hidden",true);m.removeAttribute("hidden");k.removeAttribute("hidden");i.setAttribute("hidden",true);h=document.getElementById("tool-nav");h.innerHTML="";G.src="/static/create.html";document.documentElement.setAttribute("data-create-doc",true)},cancelFn:function(){window.location.reload()}}})}else{$.ui.msgbox({msg:"未登录用户不能创建文档",type:"alert",callBack:{okFn:function(){d.options[0].selected=true;d.disabled=true;w.options[0].selected=true;document.documentElement.removeAttribute("data-create-doc")}}})}},cancelFn:function(){window.location.reload();return}}})}else{var C=$.doT(z,D);d.removeAttribute("disabled");d.innerHTML=C}}})}else{window.location.reload();return}});$.on(d,"change",function(){var v=b.value;var t=this.value;var w=r();var u=r("inp");p&&p.setAttribute("hidden",true);m&&m.setAttribute("hidden",true);k&&k.setAttribute("hidden",true);if(j){a.removeAttribute("hidden")}if(!v){$.ui.msgbox({msg:"请选择部门"});return}if(!t){$.ui.msgbox({msg:"请选择文档"});return}if(!!v&&!!t){window.location.href=window.location.origin+"/"+t}});if(m){$.on(m,$.touch_EV.start_EV,function(){var w=r();var u=r("inp");var v=window.location.pathname;var t=document.documentElement.getAttribute("data-create-doc");window.removeEventListener("keydown",g);if(t){window.location.reload()}c.style.display="block";w.src=v=="/"?"/static/inner.html":"/view"+window.location.pathname;a.removeAttribute("hidden");m.setAttribute("hidden",true);k.setAttribute("hidden",true);b.removeAttribute("disabled");d.removeAttribute("disabled");document.documentElement.removeAttribute("data-create-doc")})}if(a){$.on(a,$.touch_EV.start_EV,function(){var u=r();var t=r("inp");$.ajax({url:"/edit",type:"post",data:{projectId:d.value},dataType:"json",success:function(v){if(v.status){u.src="/edit"+window.location.pathname;window.addEventListener("keydown",g,false);m.removeAttribute("hidden");k.removeAttribute("hidden");a.setAttribute("hidden",true);p.setAttribute("hidden",true);b.disabled=d.disabled=true}else{$.ui.mask.show({tipText:'<span style="color:#fff;">错误:</span>'+v.msg,autoHide:3000})}}})})}if(k){$.on(k,$.touch_EV.start_EV,function(){var z=r();var w=r("inp");var u=document.documentElement.getAttribute("data-create-doc");var v=document.documentElement.getAttribute("data-doc-category");var y=b.value;var x=d.value;var t=z.contentWindow.editor.session.getValue();if(u){$.ajax({url:"/create-project/",type:"post",timeout:2000,data:{departmentId:y,name:x,content:t},success:function(A){if(A.status){l(A.msg,A.url)}else{$.ui.mask.show({tipText:A.msg,autoHide:2000,showCallBack:function(){window.location.reload()}})}}})}else{$.ajax({url:"/view/"+x,type:"post",data:{projectId:x,content:t},success:function(A){if(A.status){l(A.msg,A.url)}else{$.ui.mask.show({tipText:A.msg,autoHide:2000,showCallBack:function(){window.location.reload()}})}}})}})}if(p){$.on(p,$.touch_EV.start_EV,function(){var t=b.innerHTML;var v='<div style="padding-left:5px;"><select>'+t+"</select></div>";var u=['<div style="">','    <div style="display:flex;align-items:center; margin: 0 0 8px">',"        <div>选择部门:</div>","        <div>"+v+"</div>","    </div>",'    <div style="display:flex;align-items:center">',"        <div>文档名称:</div>",'        <div style="padding-left:5px"><input type="text" required /></div>',"    </div>","</div>"].join("");$.ui.msgbox({title:"创建文档",type:"confirm",msg:u,callBack:{preInput:function(){var z=this.content;var w=z.querySelectorAll("select")[0];var y=z.querySelectorAll("input")[0];var x=this.okBtn;x.disabled=true;x.classList.add("disabled");this.inp=y;this.slt=w;$.on(y,"input",function(){if(this.value&&w.value){x.removeAttribute("disabled");x.classList.remove("disabled")}else{x.disabled=true;x.classList.add("disabled")}});$.on(w,"change",function(){if(this.value&&y.value){x.removeAttribute("disabled");x.classList.remove("disabled")}else{x.disabled=true;x.classList.add("disabled")}})},okFn:function(){for(var x=0,w=b.options.length;x<w;x++){if(b.options[x].value==this.slt.value){b.options[x].selected=true}}var y='<option>选择文档</option><option value="'+this.inp.value+'" selected>'+this.inp.value+"</option>";d.innerHTML=y;b.disabled=d.disabled=true;p.setAttribute("hidden",true);a.setAttribute("hidden",true);m.removeAttribute("hidden");k.removeAttribute("hidden");h=document.getElementById("tool-nav");h.innerHTML="";r().src="/static/create.html";document.documentElement.setAttribute("data-create-doc",true)},cancelFn:function(){}}})})}},false);
+document.addEventListener('DOMContentLoaded', function () {
+	var doc 	      = document,
+		tool 		  = doc.querySelectorAll('.tool')[ 0 ],
+		toolSide      = doc.getElementById('tool-side'),
+		toolNavUser   = doc.getElementById('tool-nav-user'),
+		toolNav       = doc.getElementById('tool-nav'),
+		selectDep     = toolNavUser.querySelectorAll('.select-dep')[ 0 ],
+		selectPro     = toolNavUser.querySelectorAll('.select-pro')[ 0 ],
+		addCategory   = doc.getElementById('add-category'),
+		editOk        = doc.getElementById('edit-ok'),
+		createDoc     = doc.getElementById('create-doc'),
+		editDoc       = doc.getElementById('edit-doc'),
+		editCancel    = doc.getElementById('edit-cancel'),
+		dataUsrBool   = !!doc.documentElement.getAttribute('data-user');
+
+
+// navigator.geolocation.getCurrentPosition(function(position){
+//     alert(position.coords.latitude+'---'+position.coords.longitude)
+
+// })
+// selectPro.disabled = true;
+// selectPro.options[0].selected = true;
+
+	function keyEvt (e) {
+		if( e.keyCode === 8 ) {
+			e.preventDefault();
+			return;
+		}
+	}
+
+	if( window.location.pathname == '/' ){
+		editDoc&&editDoc.setAttribute('hidden',true);
+		selectPro.disabled = true;
+		selectDep.options[0].selected = selectPro.options[0].selected = true;
+	}
+	function getIfr( id ) {
+		var ifr = $('#ifr')[0];
+		return id ? ifr.contentWindow.editor : ifr;
+	}
+	function getLoginUserBool () {
+		return doc.documentElement.getAttribute('data-user');
+	}
+	function reloadTip ( msg, url ) {
+		$.ui.mask.show({
+			tipText: msg, 
+			autoHide: 2000,
+			showCallBack: function () {
+				if(url){
+					window.location.href = url;
+					return;
+				}
+				window.location.reload();
+			}
+		});
+	}
+
+	function createDocument () {
+
+	}
+	function rditDocument () {
+
+	}
+
+	// 选择部门
+	$.on(selectDep, 'change', function ( e ) {
+		var t = this;
+		var v = t.value;
+		var ifr = getIfr();
+		var inp = getIfr('inp');
+		selectPro.options[0].selected = true;
+
+		// window.location.href = '/';
+		var str = [
+			'<option value="">选择文档</option>'
+			,'{%~it:c:i%}'
+			,'<option value="{%=c._id%}" {%?c.selected%}selected{%?%}>{%=c.name%}</option>'
+			,'{%~%}'
+		].join('');
+
+		// ifr.src = '/static/inner.html';
+
+		// createDoc.setAttribute('hidden', true);
+		// editCancel.setAttribute('hidden', true);
+		// editOk.setAttribute('hidden', true);
+		// editDoc.setAttribute('hidden', true);
+
+		if( v ) {
+			selectPro.removeAttribute('disabled');
+			$.ajax({
+				url: '/project',
+				type: 'post',
+				data: {
+					departmentId: v
+				},
+				success: function ( data ) {
+					var i = 0;
+					var oData = data.result;
+					var s = [
+						'<div>输入文档名称: <input type="text" name="pro"></div>'
+					].join('');		
+					if ( !data.status ) {
+						$.ui.msgbox({
+							msg: '暂无文档, 是否立即创建',
+							type: 'confirm',
+							callBack: {
+								okFn: function () {
+									if( data.userName ) {
+										$.ui.msgbox({
+											title: '创建文档',
+											msg: s,
+											type: 'confirm',
+											callBack: {
+												preInput: function ( ) {
+													var okBtn     = this.okBtn,
+														content   = this.content;
+														
+													okBtn.disabled = true;
+													okBtn.classList.add('disabled');
+														
+													var inp = content.querySelectorAll('input')[ 0 ];
+													this.inp = inp;
+													$.on(inp, 'input', function () {
+														if( this.value ){
+															okBtn.removeAttribute('disabled');
+															okBtn.classList.remove('disabled');
+														} else {
+															okBtn.disabled = true;
+															okBtn.classList.add('disabled');
+														}
+													});
+												},
+												okFn: function () {
+													var doc = this.inp.value;
+													var ifr = getIfr();
+													var str = '<option>选择文档</option><option value="'+ doc +'" selected>' + doc + '</option>';
+													selectPro.innerHTML = str;
+													t.disabled = selectPro.disabled = true;
+
+													// $.ajax({
+													// 	url: '/status',
+													// 	type: 'post',
+													// 	data: {},
+													// 	dataType: 'json',
+													// 	success: function () {
+
+													// 	}
+													// })
+
+													createDoc.setAttribute('hidden', true);
+													editDoc.setAttribute('hidden', true);
+
+													editCancel.removeAttribute('hidden');
+													editOk.removeAttribute('hidden');
+
+													toolSide.setAttribute('hidden', true);
+													toolNav = document.getElementById('tool-nav');
+
+													toolNav.innerHTML = '';
+													// ifr.src = '/static/inner.html';
+													ifr.src = '/static/create.html';
+
+													document.documentElement.setAttribute('data-create-doc', true);
+
+												},
+												cancelFn: function () {
+													window.location.reload();
+												}
+											}
+										});
+									} else {
+										$.ui.msgbox({
+											msg: '未登录用户不能创建文档',
+											type: 'alert',
+											callBack: {
+												okFn: function () {
+													selectPro.options[0].selected = true;
+													selectPro.disabled = true;
+													t.options[0].selected = true;
+													document.documentElement.removeAttribute('data-create-doc');
+												}
+											}
+										})
+									}
+								},
+								cancelFn: function () {
+									window.location.reload();
+									return;
+								}
+							}
+						})
+					} else {						
+						var htmlStr = $.doT( str, oData );
+						selectPro.removeAttribute('disabled');
+						selectPro.innerHTML = htmlStr;
+					}
+				}
+			})			
+		} else {
+			window.location.reload();
+			return;
+		}
+	});
+	// 选择项目
+	$.on(selectPro, 'change', function () {
+		var dep = selectDep.value;
+		var projectId = this.value;
+		var ifr = getIfr();
+		var inp = getIfr('inp');
+
+		createDoc&&createDoc.setAttribute('hidden', true);
+		editCancel&&editCancel.setAttribute('hidden', true);
+		editOk&&editOk.setAttribute('hidden', true);
+		
+
+		if( dataUsrBool )  {
+			editDoc.removeAttribute('hidden');
+		}
+
+		if( !dep ) {
+			$.ui.msgbox({
+				msg:'请选择部门'
+			});
+			return;
+		}
+		if( !projectId ) {
+			$.ui.msgbox({
+				msg: '请选择文档'
+			});
+			return;
+		}
+
+
+		if ( !!dep && !!projectId ) {
+			window.location.href = window.location.origin +'/'+ projectId;	
+		}
+	});
+	
+	// 编辑取消按钮 创建取消按钮
+	if( editCancel ) {
+		$.on( editCancel, $.touch_EV.start_EV, function () {
+			var ifr = getIfr();
+			var inp = getIfr('inp');
+
+			//  '/static/inner.html'
+
+			var pathname = window.location.pathname;
+			var create = document.documentElement.getAttribute('data-create-doc');
+			// var edit = document.documentElement.getAttribute('data-editor-doc');
+
+			window.removeEventListener('keydown', keyEvt);
+			if( create ) {
+				window.location.reload();
+			}
+			// if ( edit ) {
+			// 	window.location.reload();
+			// }
+			tool.style.display = 'block';
+
+			ifr.src = pathname == '/' ? '/static/inner.html' : '/view' + window.location.pathname  ;
+
+			editDoc.removeAttribute('hidden');
+			editCancel.setAttribute('hidden', true);
+			editOk.setAttribute('hidden', true);
+
+			selectDep.removeAttribute('disabled');
+			selectPro.removeAttribute('disabled');
+
+			document.documentElement.removeAttribute('data-create-doc');
+			// document.documentElement.removeAttribute('data-editor-doc');
+		});
+	}
+	// 编辑按钮
+	if ( editDoc ) {
+
+		$.on( editDoc, $.touch_EV.start_EV, function () {
+
+			var ifr = getIfr();
+			var inp = getIfr('inp');
+			
+			$.ajax({
+				url: '/edit',
+				type: 'post',
+				data: {projectId: selectPro.value},
+				dataType: 'json',
+				success: function ( data ) {
+					if( data.status ) {
+						ifr.src = '/edit' + window.location.pathname;
+						window.addEventListener('keydown', keyEvt, false);
+						editCancel.removeAttribute('hidden');
+						editOk.removeAttribute('hidden');
+						editDoc.setAttribute('hidden', true);
+						createDoc.setAttribute('hidden', true);
+						selectDep.disabled = selectPro.disabled = true;
+					} else {
+						$.ui.mask.show({tipText:'<span style="color:#fff;">错误:</span>'+ data.msg, autoHide: 3000} );
+					}
+				}
+			});
+		});
+	}
+	// 编辑确认按钮
+	if( editOk ) {
+		$.on( editOk, $.touch_EV.start_EV, function () {
+			var ifr = getIfr();
+			var inp = getIfr('inp');
+			var create = document.documentElement.getAttribute('data-create-doc');
+			var category = document.documentElement.getAttribute('data-doc-category');
+			var dep = selectDep.value;
+			var doc = selectPro.value;
+			var doContent = ifr.contentWindow.editor.session.getValue();
+
+			if( create ) {
+				// 创建文档
+				$.ajax({
+					url  : '/create-project/',
+					type : 'post',
+					timeout: 2000,
+					data : {
+						departmentId : dep,
+						name         : doc,
+						content      : doContent
+					},
+					success : function ( data ) {
+						if ( data.status ) {
+							reloadTip(data.msg, data.url);
+						} else {
+							$.ui.mask.show({
+								tipText: data.msg, 
+								autoHide: 2000,
+								showCallBack: function () {
+									window.location.reload();
+								}
+							});
+						}
+					}
+				});	
+			} else {
+				// 编辑
+				$.ajax({
+					url  : '/view/' + doc,
+					type : 'post',
+					data : {
+						projectId : doc, // 项目id
+						content   : doContent
+					},
+					success : function ( data ) {
+						if ( data.status ) {
+							reloadTip(data.msg, data.url);
+						} else {
+							$.ui.mask.show({
+								tipText: data.msg, 
+								autoHide: 2000,
+								showCallBack: function () {
+									window.location.reload();
+								}
+							});
+						}
+					}
+				});				
+			}
+		});
+	}
+	// 创建文档
+	if ( createDoc ) {
+
+		$.on(createDoc, $.touch_EV.start_EV, function () {
+			// var slideOld = tool.style.display;
+			var depNode = selectDep.innerHTML;
+			var s = '<div style="padding-left:5px;"><select>' + depNode + '</select></div>';
+			var s2 = [
+				'<div style="">'
+				,'    <div style="display:flex;align-items:center; margin: 0 0 8px">'
+				,'        <div>选择部门:</div>'
+				,'        <div>' + s + '</div>'
+				,'    </div>'
+				,'    <div style="display:flex;align-items:center">'
+				,'        <div>文档名称:</div>'
+				,'        <div style="padding-left:5px"><input type="text" required /></div>'
+				,'    </div>'
+				,'</div>'
+			].join('');
+			// console.log( slideOld )
+			// createDoc.setAttribute('hidden', true);
+			// tool.style.display = 'none';
+
+			$.ui.msgbox({
+				title    : '创建文档',
+				type     : 'confirm',
+				msg      : s2,
+				callBack : {
+					preInput: function () {
+						var contNode   = this.content;
+						var selectNode = contNode.querySelectorAll('select')[0];
+						var inputNode  = contNode.querySelectorAll('input')[0];
+						var okBtn      = this.okBtn;
+
+						okBtn.disabled = true;
+						okBtn.classList.add('disabled');
+							
+						this.inp = inputNode;
+						this.slt = selectNode;
+
+						$.on(inputNode, 'input', function () {
+							if( this.value && selectNode.value ){
+								okBtn.removeAttribute('disabled');
+								okBtn.classList.remove('disabled');
+							} else {
+								okBtn.disabled = true;
+								okBtn.classList.add('disabled');
+							}
+						});
+						$.on(selectNode, 'change', function () {
+							if( this.value && inputNode.value ){
+								okBtn.removeAttribute('disabled');
+								okBtn.classList.remove('disabled');
+							} else {
+								okBtn.disabled = true;
+								okBtn.classList.add('disabled');
+							}
+						});
+					},
+					okFn: function () {
+
+						for( var i = 0, len = selectDep.options.length; i < len; i++ ) {
+							if( selectDep.options[ i ].value == this.slt.value ) {
+								selectDep.options[ i ].selected = true
+							}
+						}
+
+						var str = '<option>选择文档</option><option value="'+ this.inp.value +'" selected>' + this.inp.value + '</option>';
+						selectPro.innerHTML = str;
+						
+						selectDep.disabled = selectPro.disabled = true;
+
+						createDoc.setAttribute('hidden', true);
+						editDoc.setAttribute('hidden', true);
+
+						editCancel.removeAttribute('hidden');
+						editOk.removeAttribute('hidden');
+
+
+						// toolSide.setAttribute('hidden', true);
+
+						toolNav = document.getElementById('tool-nav');
+						toolNav.innerHTML = '';
+
+						getIfr().src = '/static/create.html';
+						document.documentElement.setAttribute('data-create-doc', true);
+
+					},
+					cancelFn: function () {
+						// window.location.reload();
+					}
+				}
+			});
+		});
+	}
+	
+	
+}, false);
